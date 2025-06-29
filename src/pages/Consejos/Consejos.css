@@ -1,0 +1,353 @@
+/* premium-upgrade.css */
+
+.premium-container {
+  padding: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+/* Premium Header */
+.premium-header {
+  text-align: center;
+  padding: 40px 20px;
+  color: white;
+}
+
+.premium-crown {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: bounce 2s infinite;
+}
+
+.premium-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.premium-highlight {
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.premium-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+  font-weight: 300;
+}
+
+/* Pricing Card */
+.pricing-card {
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  border: 2px solid #ffd700;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
+}
+
+.pricing-content {
+  text-align: center;
+  padding: 20px;
+}
+
+.price-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.currency {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #666;
+  margin-right: 5px;
+}
+
+.price {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #333;
+  line-height: 1;
+}
+
+.period {
+  font-size: 1.2rem;
+  color: #666;
+  margin-left: 5px;
+}
+
+.save-badge {
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+}
+
+.price-description {
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Features Card */
+.features-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.features-title {
+  display: flex;
+  align-items: center;
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.title-icon {
+  margin-right: 10px;
+  color: #ffd700;
+}
+
+.features-list {
+  padding: 0;
+}
+
+.feature-item {
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  --border-color: #f0f0f0;
+}
+
+.feature-item.highlight {
+  background: linear-gradient(90deg, #fff3cd, #ffffff);
+  border-left: 4px solid #ffd700;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  color: #667eea;
+  margin-right: 16px;
+}
+
+.feature-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.feature-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Testimonial Card */
+.testimonial-card {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 16px;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+.testimonial-content {
+  text-align: center;
+  color: white;
+  padding: 10px;
+  position: relative;
+}
+
+.quote-icon {
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: Georgia, serif;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.testimonial-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  margin-bottom: 10px;
+}
+
+.testimonial-author strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.author-title {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.stars {
+  font-size: 1.2rem;
+}
+
+/* CTA Section */
+.cta-section {
+  margin-bottom: 30px;
+}
+
+.upgrade-button {
+  --background: linear-gradient(45deg, #ffd700, #ffed4e);
+  --color: #333;
+  --border-radius: 16px;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+  --box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  text-transform: none;
+  transition: all 0.3s ease;
+}
+
+.upgrade-button:hover {
+  --box-shadow: 0 6px 30px rgba(255, 215, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.maybe-later-button {
+  --color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  text-transform: none;
+}
+
+/* Guarantee Section */
+.guarantee-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  text-align: center;
+}
+
+.guarantee-icon {
+  font-size: 1.5rem;
+  color: #2dd36f;
+  margin-right: 10px;
+}
+
+.guarantee-text {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply fade in animation to cards */
+.pricing-card,
+.features-card,
+.testimonial-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.features-card {
+  animation-delay: 0.2s;
+}
+
+.testimonial-card {
+  animation-delay: 0.4s;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .premium-container {
+    padding: 16px;
+  }
+  
+  .premium-header {
+    padding: 30px 16px;
+  }
+  
+  .premium-crown {
+    font-size: 3rem;
+  }
+  
+  .premium-title {
+    font-size: 1.8rem;
+  }
+  
+  .premium-subtitle {
+    font-size: 1rem;
+  }
+  
+  .price {
+    font-size: 2.5rem;
+  }
+  
+  .features-title {
+    font-size: 1.2rem;
+  }
+  
+  .testimonial-text {
+    font-size: 0.95rem;
+  }
+}
+
+/* Toolbar customization */
+ion-toolbar {
+  --background: transparent;
+  --color: white;
+  --border-color: transparent;
+}
+
+ion-back-button {
+  --color: white;
+}

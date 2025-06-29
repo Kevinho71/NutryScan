@@ -1,58 +1,124 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
 
 .register-bg {
-  --background: #DDF1DC;
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   position: relative;
   padding: 0;
+  background: var(--background);
+  min-height: 100vh;
 }
 
 .field-label {
   position: absolute;
-  color: black; /* antes: white */
+  color: #5d5c5c;
   font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 6px;
+  backdrop-filter: blur(10px);
 }
 
 .input-field {
   position: absolute;
-  width: 300px;
-  height: 35px;
-  background-color: transparent;
-  border: none;
-  border-bottom: 2px solid black; /* antes: white */
-  color: black; /* antes: white */
+  width: 320px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+  color: #2d3748;
   font-family: 'Open Sans', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 500;
   outline: none;
+  padding: 0 16px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.input-field:focus {
+  background-color: rgba(255, 255, 255, 1);
+  border-color: #667eea;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.25);
+  transform: translateY(-2px);
+}
+
+.input-field::placeholder {
+  color: #a0aec0;
 }
 
 .select-black {
-  color: black;
-  background-color: white;
+  color: #2d3748;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  font-weight: 500;
 }
 
 /* Botón */
 .menu-btn {
   position: absolute;
-  background-color: #FFC857;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
   border: none;
-  border-radius: 8px;
-  color: black;
+  border-radius: 25px;
+  color: #ffffff;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  padding: 14px 32px;
+  box-shadow: 0 6px 20px rgba(79, 254, 129, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.menu-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(79, 254, 117, 0.4);
+  background: linear-gradient(135deg, #43f56f 0%, #83f500 100%);
+}
+
+.menu-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(79, 254, 123, 0.3);
 }
 
 /* Nuevos estilos para campos bloqueados */
 .blocked-label {
-  color: #888; /* gris oscuro para texto */
+  color: #719676;
+  font-weight: 400;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .blocked-field {
-  border-bottom: 2px solid #666 !important; /* línea gris oscura */
-  color: #888 !important;                  /* texto gris oscuro */
-  pointer-events: auto;                   /* permite clics */
-  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  border: 2px solid rgba(160, 174, 192, 0.5) !important;
+  color: #718096 !important;
+  pointer-events: auto;
+  cursor: not-allowed;
+  backdrop-filter: blur(5px);
+}
+
+.blocked-field:hover {
+  background-color: rgba(255, 255, 255, 0.65) !important;
+  transform: none;
+}
+
+/* Efectos adicionales para modernizar */
+.register-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+  pointer-events: none;
 }

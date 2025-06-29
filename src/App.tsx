@@ -8,7 +8,9 @@ import Register from './pages/Register/Register';
 import Login from './pages/Login/login';
 import Principal from './pages/Principal/principal';
 import Tienda from './pages/Tienda/Tienda';
+//import Consejos from './pages/Consejos/Consejos';
 import Configuracion from './pages/Configuracion/configuracion';
+import Resultado from './pages/Resultado/resultado'; // ajusta el path si es necesario
 
 /* Estilos de Ionic */
 import '@ionic/react/css/core.css';
@@ -49,13 +51,16 @@ const App: React.FC = () => (
         <Route exact path="/principal">
           <Principal />
         </Route>
+        <Route exact path="/resultado">
+          <Resultado />
+        </Route>
         <Route exact path="/tienda">
           <Tienda />
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
-        <Route exact path="/configuracion">
+         <Route exact path="/configuracion">
           <Configuracion />
         </Route>
       </IonRouterOutlet>

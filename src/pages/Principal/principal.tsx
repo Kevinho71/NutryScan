@@ -1,20 +1,47 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
-  IonPage, IonContent, IonButton
+  IonPage, IonContent, IonButton, IonLoading, IonToast
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import './principal.css'; // Importa los estilos
+import axios from 'axios';
+import './principal.css';
+
+// Interfaz para tipear la respuesta de la API
+interface ScanResponse {
+  resultado?: {
+    error?: boolean;
+    ingredientes?: string[];
+    nutrientes?: {
+      calorias?: number;
+      proteinas?: number;
+      carbohidratos?: number;
+      grasas?: number;
+    };
+    // Agrega otros campos que esperes en el resultado
+  };
+  tiempo_procesamiento?: string;
+  status?: string;
+  message?: string;
+  // Agrega otros campos que esperes en la respuesta
+}
 
 const usuario = "Usuario Demo";
 
 const Principal: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
+  
+  // Estados para loading y errores
+  const [isLoading, setIsLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastColor, setToastColor] = useState<'success' | 'danger'>('success');
 
   const handleAbrirCamara = () => {
     if (fileInputRef.current) {
       fileInputRef.current.accept = "image/*";
       fileInputRef.current.capture = "environment";
+      fileInputRef.current.multiple = true; // Permitir múltiples imágenes
       fileInputRef.current.click();
     }
   };
@@ -23,6 +50,7 @@ const Principal: React.FC = () => {
     if (fileInputRef.current) {
       fileInputRef.current.accept = "image/*";
       fileInputRef.current.removeAttribute("capture");
+      fileInputRef.current.multiple = true; // Permitir múltiples imágenes
       fileInputRef.current.click();
     }
   };
@@ -31,9 +59,93 @@ const Principal: React.FC = () => {
     history.push('/configuracion');
   };
 
+  const handleImagenSeleccionada = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    // Validar número de archivos (máximo 2 según tu backend)
+    if (files.length > 2) {
+      setToastMessage('⚠ Máximo 2 imágenes permitidas');
+      setToastColor('danger');
+      setShowToast(true);
+      return;
+    }
+
+    // Validar tamaño de archivos (ejemplo: 5MB máximo por imagen)
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    for (let i = 0; i < files.length; i++) {
+      if (files[i].size > maxSize) {
+        setToastMessage('⚠ Las imágenes deben ser menores a 5MB');
+        setToastColor('danger');
+        setShowToast(true);
+        return;
+      }
+    }
+
+    const formData = new FormData();
+    
+    // Agregar todas las imágenes seleccionadas
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
+
+    const usuario_id = 2; // ← Cambia este ID según tu app
+
+    setIsLoading(true);
+
+    try {
+      
+      const res = await axios.post<ScanResponse>(
+        "https://nutry-scan-backend.onrender.com/scan/scan/ingredientes",
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+          params: { usuario_id },
+          timeout: 120000 // 2 minutos timeout (tu backend tarda ~36s)
+        }
+      );
+
+      console.log("✅ Resultado del escaneo:", res.data);
+
+      // Navegar a resultado con un pequeño delay para mostrar el toast
+      setTimeout(() => {
+        history.push({
+          pathname: "/resultado",
+          state: { 
+            scanData: res.data // Enviamos toda la respuesta del backend
+          }
+        });
+      }, 1500);
+
+    } catch (err: any) {
+      console.error("❌ Error al escanear:", err);
+      
+      let errorMessage = "Ocurrió un error al procesar la imagen";
+      
+      if (err.code === 'ECONNABORTED') {
+        errorMessage = "⏰ Tiempo de espera agotado. El análisis está tardando mucho.";
+      } else if (err.response?.status === 400) {
+        errorMessage = err.response?.data?.detail || "📷 Imagen no válida o problema con el archivo";
+      } else if (err.response?.status === 500) {
+        errorMessage = "🔧 Error del servidor. Intenta más tarde.";
+      } else if (!navigator.onLine) {
+        errorMessage = "📶 Sin conexión a internet";
+      }
+
+      setToastMessage(errorMessage);
+      setToastColor('danger');
+      setShowToast(true);
+    } finally {
+      setIsLoading(false);
+      // Limpiar el input para permitir seleccionar la misma imagen de nuevo
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
   return (
     <IonPage>
-      {/* Botón de engranaje arriba a la izquierda */}
       <button
         onClick={handleConfiguracion}
         className="boton-configuracion"
@@ -46,7 +158,6 @@ const Principal: React.FC = () => {
       </button>
 
       <IonContent className="principal-bg">
-        {/* Logo de usuario */}
         <div className="logo-container">
           <svg width="150" height="150" viewBox="0 0 150 150" fill="none">
             <circle cx="75" cy="75" r="75" fill="#3D6FA2" />
@@ -55,32 +166,57 @@ const Principal: React.FC = () => {
           </svg>
         </div>
 
-        {/* Nombre del usuario */}
         <div className="usuario-nombre">
           {usuario}
         </div>
 
-        {/* Botones */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-          <IonButton expand="block" className="principal-btn" onClick={handleAbrirCamara}>
-            Escaner
+          <IonButton 
+            expand="block" 
+            className="principal-btn" 
+            onClick={handleAbrirCamara}
+            disabled={isLoading}
+          >
+            📷 Escanear
           </IonButton>
-          <IonButton expand="block" className="principal-btn" onClick={handleAbrirGaleria}>
-            Galería
+          <IonButton 
+            expand="block" 
+            className="principal-btn" 
+            onClick={handleAbrirGaleria}
+            disabled={isLoading}
+          >
+            🖼 Galería
           </IonButton>
         </div>
 
-        {/* Input oculto */}
         <input
           ref={fileInputRef}
           type="file"
           accept="image/*"
           style={{ display: 'none' }}
-          onChange={() => { /* Manejo de la imagen */ }}
+          onChange={handleImagenSeleccionada}
+        />
+
+        {/* Loading spinner */}
+        <IonLoading
+          isOpen={isLoading}
+          message="🔍 Analizando ingredientes y nutrientes..."
+          duration={0}
+          spinner="crescent"
+        />
+
+        {/* Toast para mensajes */}
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(false)}
+          message={toastMessage}
+          duration={4000}
+          color={toastColor}
+          position="top"
         />
       </IonContent>
     </IonPage>
   );
 };
 
-export default Principal;
+export default Principal;
