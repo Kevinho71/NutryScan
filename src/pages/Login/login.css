@@ -3,7 +3,7 @@
 .login-bg {
   --background: #f8fafc;
   background: linear-gradient(145deg, #f0f9ff 0%, #e8f5e8 50%, #e0f7fa 100%);
-  color: #1e293b;
+  color: #1f3b1e;
   font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
